@@ -1,0 +1,5 @@
+.digitContainer {
+    display: inline-block;
+    vertical-align: top;
+    transition: transform 2s;
+}
