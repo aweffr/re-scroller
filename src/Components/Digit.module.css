@@ -1,5 +1,21 @@
 .digitContainer {
     display: inline-block;
-    vertical-align: top;
-    transition: transform 2s;
+}
+
+.digit {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/*https://easings.net/zh-cn*/
+@value easeOutSine cubic-bezier(0.39, 0.575, 0.565, 1);
+
+@value easeOutCubic cubic-bezier(0.215, 0.61, 0.355, 1);
+
+@value easeOutCirc cubic-bezier(0.075, 0.82, 0.165, 1);
+
+
+.animate {
+    transition: transform 2s easeOutSine;
 }

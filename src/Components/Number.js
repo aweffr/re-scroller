@@ -8,20 +8,22 @@ class Number extends Component {
 
   state = {
     numArrs: [
-      [1, 3, 5, 7],
-      [2, 4, 6, 8]
-    ]
+      [1], [5],
+    ],
+    up: true,
   };
 
   componentWillReceiveProps(nextProps) {
     let [arr1, arr2] = this.state.numArrs;
     const {num} = nextProps;
 
+    const up = (num > this.props.num);
+
     arr1 = [...arr1, Math.floor(num / 10) % 10];
     arr2 = [...arr2, num % 10];
 
     this.setState({
-      numArrs: [arr1, arr2]
+      numArrs: [arr1, arr2], up: up
     });
   }
 
@@ -29,9 +31,12 @@ class Number extends Component {
     e.stopPropagation();
     e.preventDefault();
 
+    const {num} = this.props;
+
+
     let [arr1, arr2] = this.state.numArrs;
-    arr1 = [arr1[arr1.length - 1],];
-    arr2 = [arr2[arr2.length - 1],];
+    arr1 = [Math.floor(num / 10) % 10,];
+    arr2 = [num % 10,];
     this.setState({
       numArrs: [arr1, arr2]
     })
@@ -39,7 +44,10 @@ class Number extends Component {
 
   render() {
     const {height} = this.props;
-    const {numArrs} = this.state;
+    let {numArrs, up} = this.state;
+    if (!up) {
+      numArrs = numArrs.map(arr => arr.reverse());
+    }
 
     return (
       <div className={styles.numberContainer} style={{height: height}}>
@@ -48,12 +56,14 @@ class Number extends Component {
           numArr={numArrs[0]}
           idx={0}
           onTransitionEnd={this.onTransitionEnd}
+          up={up}
         />
         <Digit
           height={height}
           numArr={numArrs[1]}
           idx={1}
           onTransitionEnd={this.onTransitionEnd}
+          up={up}
         />
       </div>
     );
